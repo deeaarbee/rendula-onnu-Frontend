@@ -5,7 +5,6 @@
 </template>
 
 <script>
-  import Username from './components/Username'
 export default {
   name: 'app',
   data () {
@@ -20,7 +19,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
   html{
     height: 100vh;
     overflow: hidden;

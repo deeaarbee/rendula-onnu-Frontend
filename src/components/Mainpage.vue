@@ -24,7 +24,9 @@
       props:["root_url"],
       data(){
           return{
-            options:[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20],
+            options:["Kp","canteen","Kp","snh","Narayanasamy","geetha","Green benCh","blue shed",
+              "Senior","junior","Nss,nso,yrc or ctf","SA","Techofes","kurukshetra","main gate",
+              "kotur gate","Spartns","twisters","Ice tea","cold coffee"],
             answers:[],
             value:0,
             iter1:0,
