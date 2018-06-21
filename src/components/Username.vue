@@ -12,7 +12,7 @@
 <script>
     export default {
         name: "username",
-      props:["root_url"],
+        props:["root_url"],
       data(){
           return{
             username:null,

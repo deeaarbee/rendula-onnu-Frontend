@@ -5,7 +5,7 @@
     <br>
     <div class="columns is-gapless is-multiline is-mobile">
       <div class="column" @click="trueclick">
-
+        <p v-html="imgtag"></p>
         <h1 class="title is-1">{{ option1 }}</h1>
       </div>
       <div class="column" @click="falseclick">
@@ -33,7 +33,8 @@
             iter2:1,
             option1:"",
             option2:"",
-            leaderboard:null
+            leaderboard:null,
+            imgtag:'<img src="../assets/Canteen.jpg" alt="Hello"/>'
         }
       },
       mounted(){
