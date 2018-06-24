@@ -14,48 +14,32 @@ Vue.component('Mainpage', Mainpage);
 Vue.component('Final', Final);
 Vue.component('LeaderBoard', LeaderBoard);
 
-export const root_url = '';
 
 const router = new VueRouter({
+  mode: 'history',
   routes: [{
     path: '/',
     name:"username",
     component: Username,
-    props: {
-      root_url
-    }
   },{
     path: '/:userid',
     name:"username1",
     component: Username,
-    props: {
-      root_url
-    }
   },
     {
     path: '/play',
     name:"mainpage",
     component: Mainpage,
-    props: {
-      root_url
-    }
   },{
     path: '/thankyou',
     name:'thankyou',
     component: Final,
-    props:{
-      root_url
-    }
   },
     {
       path: '/leaderboard',
       name:'leaderboard',
       component: LeaderBoard,
-      props:{
-        root_url
-      }
-    }
-  ]
+  }]
 });
 
 
