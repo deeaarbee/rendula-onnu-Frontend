@@ -3,17 +3,17 @@
     <h1 class="title is-1">Rendula Onnu!</h1>
     <h2 class="subtitle">Ceg Edition</h2>
     <br>
-    <div class="columns is-gapless is-multiline is-mobile">
-      <div class="column" @click="trueclick">
-        <img v-bind:src ="getimage1()" alt="" style="width:450px;height:350px;"/>
-        <h1 class="title is-1">{{ option1 }}</h1>
+    <div class="columns">
+      <div v-bind:class="{column:column,polaroid:polaroid,green:green,red:red}" @click="trueclick">
+        <img v-bind:src="getimage1()" alt="" style="width:450px;height:325px;" />
+        <div class="title is-1">{{ option1 }}</div>
       </div>
-      <div class="column" @click="falseclick">
-        <img v-bind:src ="getimage2()" alt="" style="width:450px;height:350px;"/>
-        <h1 class="title is-1" >{{ option2 }}</h1>
+      <div v-bind:class="{column:column,polaroid:polaroid,green:red,red:green}" @click="falseclick">
+        <img v-bind:src="getimage2()" alt="" style="width:450px;height:325px;"/>
+        <div class="title is-1" >{{ option2 }}</div>
       </div>
     </div>
-    <h6 class="title is-6">{{ value/10 }}/10</h6>
+    <h6 class="title">{{ value/10 }}/10</h6>
     <progress class="progress is-danger" v-bind:value="value" max="100" ></progress>
   </div>
 </template>
@@ -38,15 +38,32 @@
             option2:"",
             leaderboard:null,
             img1:"",
-            img2:""
+            img2:"",
+            index:0,
+            correctans:null,
+            green:false,
+            red:false,
+            column:true,
+            polaroid:true
+        }
+      },
+      created()
+      {
+        console.log(this.$route.params.userid);
+        if(this.$route.params.userid!=null)
+        {
+          this.$http.get('http://api.the-lazy-coder.me/user/'+this.$route.params.userid).then(function(data){
+            this.correctans=data.body[0].answers;
+            console.log(this.correctans);
+          });
         }
       },
       mounted(){
-          console.log(this.$route.params.username);
-          console.log(this.$route.params.userid);
-          if (this.$route.params.username == null){
-            this.$router.push({name: 'username1', params:{userid:this.$route.params.userid }});
-          }
+        console.log(this.$route.params.username);
+        console.log(this.$route.params.userid);
+        if (this.$route.params.username == null){
+          this.$router.push({name: 'username1', params:{userid:this.$route.params.userid }});
+        }
         this.option1 = this.options[this.iter1];
         this.option2 = this.options[this.iter2];
         this.value = 10;
@@ -55,11 +72,18 @@
           trueclick : function () {
             this.value +=10;
             if(this.value == 110) {
+              this.value=100;
               this.answers.push(1);
               //console.log(this.answers)
               if (this.$route.params.userid != null) {
                 console.log("inside if");
                 console.log(this.answers);
+                 if(this.correctans[this.index]==0){
+                  this.red=true;
+                }
+                else{
+                  this.green=true;
+                }
                 this.$http.post('http://api.the-lazy-coder.me/vote/addVote', {
                   votername: this.$route.params.username,
                   userid: this.$route.params.userid,
@@ -79,11 +103,20 @@
                   answers: this.answers,
                 }).then(function (data) {
                   console.log(data);
+                  console.log("user added");
                   this.$router.push({name: 'thankyou'})
                 });
               }
             }
-            else { 
+            else {
+              if(this.$route.params.userid != null){
+                if(this.correctans[this.index]==1){
+                  this.green=true;
+                }
+                else{
+                  this.red=true;
+                }
+              }   
               this.answers.push(1);
               this.update_questions();
               //console.log(this.answers);
@@ -92,11 +125,18 @@
           falseclick: function () {               
             this.value +=10;
             if(this.value == 110){
+              this.value=100;
               this.answers.push(0);
               //console.log(this.answers);
               if(this.$route.params.userid != null){
                 console.log("inside if");
-                console.log(this.answers);
+                console.log(this.answers); 
+                if(this.correctans[this.index]==0){
+                  this.red=true;
+                }
+                else{
+                  this.green=true;
+                }
                 this.$http.post('http://api.the-lazy-coder.me/vote/addVote',{
                   votername: this.$route.params.username,
                   userid: this.$route.params.userid,
@@ -119,6 +159,14 @@
               }
             }
             else{
+              if(this.$route.params.userid != null){
+                if(this.correctans[this.index]==0){
+                  this.red=true;
+                }
+                else{
+                  this.green=true;
+                }
+              }
               this.answers.push(0);
               this.update_questions();
               //console.log(this.answers);
@@ -135,8 +183,17 @@
           update_questions: function () {
             this.iter1 += 2;
             this.iter2 += 2;
-            this.option1 = this.options[this.iter1];
-            this.option2 = this.options[this.iter2];
+            this.index += 1;
+            if(this.$route.params.userid!=null){
+              setTimeout(()=>this.option1 = this.options[this.iter1],200);
+              setTimeout(()=>this.option2 = this.options[this.iter2],200);
+            }
+            else{
+              this.option1=this.options[this.iter1];
+              this.option2=this.options[this.iter2];
+            }
+            setTimeout( () =>this.green=false, 100);
+            setTimeout( () =>this.red=false, 100);
           }
       }
 
@@ -145,9 +202,20 @@
 
 <style scoped>
 
-  .progress{
-    width: 30%;
-    margin: 10% 60% 40% 35%;
-  }
+.progress{
+  width: 30%;
+  margin: 2% 10% 5% 35%;
+}
+div.polaroid {
+  padding:0px;
+  box-shadow:  0 6px 20px 0 rgba(0, 0, 0, 0.219);
+  margin-bottom: 25px;
+}
 
+div.green{
+background-color:green;
+}
+div.red{
+background-color:red;
+}
 </style>

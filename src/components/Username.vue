@@ -1,5 +1,4 @@
 <template>
-  <div>
     <div id="username">
     <h1 class="title is-1">Rendula Onnu!</h1>
     <h2 class="subtitle">Ceg Edition</h2>
@@ -8,10 +7,6 @@
     <br>
     <button class="button is-large is-black" v-on:click="play">Play</button>
     </div>
-    <div v-for="em in dat">
-      <p>{{em.mark}}</p> 
-    </div>
-  </div>
 </template>
 
 <script>
@@ -21,19 +16,7 @@
           return{
             username:null,
             userid: null,
-            dat:[
-              {
-              mark:2
-              },
-              {
-                mark:3
-              },
-              {
-                mark:4
-              },
-              {
-                mark:4
-              }]
+            session:null
           }
       },
       created(){
@@ -41,6 +24,10 @@
           if (this.$route.params.userid != null){
             this.userid = this.$route.params.userid
           }
+          this.$http.get('http://api.the-lazy-coder.me/user/getSession').then(function(data){
+            this.session=data.body;
+            console.log(this.session);
+          });
       },
      methods:{
           play: function(){
@@ -48,10 +35,22 @@
             if (this.username=='' || this.username==null){
               this.$router.push('/');
             }
+            else if(this.session){
+              if(this.session==this.userid){
+                this.$router.push({name:'leaderboard',params:{username: this.username, userid: this.userid }})
+              }
+              else if(this.userid!=null){
+                this.$router.push({name:'leaderboard',params:{username: this.username, userid: this.userid }})
+              }
+              else{
+              this.$router.push({name:'mainpage', params:{username: this.username, userid: this.userid }});  
+              }
+            }            
+            else{
             this.$router.push({name:'mainpage', params:{username: this.username, userid: this.userid }});
+            }
+            }
           }
-     }
-
     }
 </script>
 
