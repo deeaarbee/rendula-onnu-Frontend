@@ -1,11 +1,15 @@
 <template>
     <div id="username">
-    <h1 class="title is-1">Rendula Onnu!</h1>
-    <h2 class="subtitle">Ceg Edition</h2>
-    <input class="input is-large" type="text" placeholder="Enter your name" v-model="username" required>
-    <br>
-    <br>
-    <button class="button is-large is-black" v-on:click="play">Play</button>
+      <section class="hero is-medium is-dark">
+        <div class="hero-body">
+          <div class="container">
+            <h1 class="title">Rendula Onnu!</h1>
+            <h2 class="subtitle">Ceg Edition</h2>
+            <input class="input is-large" type="text" placeholder="Enter your name" v-model="username" required>
+            <button class="button is-large is-black" v-on:click="play">Play</button>
+          </div>          
+        </div>     
+      </section>      
     </div>
 </template>
 

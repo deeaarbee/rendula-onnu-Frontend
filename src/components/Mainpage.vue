@@ -1,19 +1,22 @@
 <template>
   <div id="mainpage">
-    <h1 class="title is-1">Rendula Onnu!</h1>
-    <h2 class="subtitle">Ceg Edition</h2>
-    <br>
-    <div class="columns">
-      <div v-bind:class="{column:column,polaroid:polaroid,green:green,red:red}" @click="trueclick">
-        <img v-bind:src="getimage1()" alt="" style="width:450px;height:325px;" />
+    <section class="hero is-dark">
+        <div class="container">
+          <h1 class="title">Rendula Onnu!</h1>
+          <h2 class="subtitle">Ceg Edition</h2>
+        </div>
+    </section>
+    <div class="columns is-mobile">
+      <div v-bind:class="{column:temp,polaroid:temp,green:green,red:red}" @click="trueclick">
+        <img v-bind:src="getimage1()" alt="" style="width:70%;height:325px;" />
         <div class="title is-1">{{ option1 }}</div>
       </div>
-      <div v-bind:class="{column:column,polaroid:polaroid,green:red,red:green}" @click="falseclick">
-        <img v-bind:src="getimage2()" alt="" style="width:450px;height:325px;"/>
+      <div v-bind:class="{column:temp,polaroid:temp,green:red,red:green}" @click="falseclick">
+        <img v-bind:src="getimage2()" alt="" style="width:70%;height:325px;"/>
         <div class="title is-1" >{{ option2 }}</div>
       </div>
     </div>
-    <h6 class="title">{{ value/10 }}/10</h6>
+    <h6 class="title" style="color:white">{{ value/10 }}/10</h6>
     <progress class="progress is-danger" v-bind:value="value" max="100" ></progress>
   </div>
 </template>
@@ -43,8 +46,7 @@
             correctans:null,
             green:false,
             red:false,
-            column:true,
-            polaroid:true
+            temp:true
         }
       },
       created()
@@ -78,12 +80,14 @@
               if (this.$route.params.userid != null) {
                 console.log("inside if");
                 console.log(this.answers);
-                 if(this.correctans[this.index]==0){
+                if(this.correctans[this.index]==0){
                   this.red=true;
                 }
                 else{
                   this.green=true;
                 }
+                setTimeout( () =>this.green=false, 100);
+                setTimeout( () =>this.red=false, 100);
                 this.$http.post('http://api.the-lazy-coder.me/vote/addVote', {
                   votername: this.$route.params.username,
                   userid: this.$route.params.userid,
@@ -137,6 +141,8 @@
                 else{
                   this.green=true;
                 }
+                setTimeout( () =>this.green=false, 100);
+                setTimeout( () =>this.red=false, 100);
                 this.$http.post('http://api.the-lazy-coder.me/vote/addVote',{
                   votername: this.$route.params.username,
                   userid: this.$route.params.userid,
@@ -202,14 +208,25 @@
 
 <style scoped>
 
+.columns{
+  margin-top:0px;
+}
+.hero{
+  margin-top:26px;
+  margin-bottom:25px;
+}
+img{
+  margin-top: 40px;
+}
 .progress{
   width: 30%;
-  margin: 2% 10% 5% 35%;
+  margin: -2% 10% 5% 35%;
 }
 div.polaroid {
   padding:0px;
+  background-color: white;
   box-shadow:  0 6px 20px 0 rgba(0, 0, 0, 0.219);
-  margin-bottom: 25px;
+  margin-bottom: 20px;
 }
 
 div.green{
