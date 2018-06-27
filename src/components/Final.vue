@@ -8,6 +8,7 @@
                 <h1 class="title">Thanks for playing!</h1>
                 <h1 class="title">Share this link with your friends</h1>
                 <h2 style="font-size:20px;">localhost:8080/{{id}}</h2>
+              <a v-bind:href="link">Share on whatsapp</a>
             </div>
         </div>
     </section>
@@ -19,7 +20,8 @@
         name: "final",
         data() {
             return{
-                id:null
+                id:null,
+                link:"whatsapp://send?text=Play Onnula rendu! https://localhost:8080/" + this.id
             }
         },
         mounted(){
@@ -28,7 +30,7 @@
                 console.log(data);
             });
         }
-        
+
     }
 </script>
 
