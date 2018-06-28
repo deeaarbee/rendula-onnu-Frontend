@@ -54,7 +54,7 @@
         console.log(this.$route.params.userid);
         if(this.$route.params.userid!=null)
         {
-          this.$http.get('http://localhost:4444/user/'+this.$route.params.userid).then(function(data){
+          this.$http.get('http://127.0.0.1:4444/user/'+this.$route.params.userid).then(function(data){
             this.correctans=data.body[0].answers;
             console.log(this.correctans);
           });
@@ -88,7 +88,7 @@
                 }
                 setTimeout( () =>this.green=false, 100);
                 setTimeout( () =>this.red=false, 100);
-                this.$http.post('http://localhost:4444/vote/addVote', {
+                this.$http.post('http://127.0.0.1:4444/vote/addVote', {
                   votername: this.$route.params.username,
                   userid: this.$route.params.userid,
                   answers: this.answers,
@@ -102,7 +102,7 @@
                 console.log("else");
                 console.log(this.$route.params.username);
                 console.log(this.answers);
-                this.$http.post('http://localhost:4444/user/addUser', {
+                this.$http.post('http://127.0.0.1:4444/user/addUser', {
                   username: this.$route.params.username,
                   answers: this.answers,
                 }).then(function (data) {
@@ -143,7 +143,7 @@
                 }
                 setTimeout( () =>this.green=false, 100);
                 setTimeout( () =>this.red=false, 100);
-                this.$http.post('http://localhost:4444/vote/addVote',{
+                this.$http.post('http://127.0.0.1:4444/vote/addVote',{
                   votername: this.$route.params.username,
                   userid: this.$route.params.userid,
                   answers: this.answers,
@@ -155,7 +155,7 @@
               }
               else {
                 console.log("else");
-                this.$http.post('http://localhost:4444/user/addUser', {
+                this.$http.post('http://127.0.0.1:4444/user/addUser', {
                   username: this.$route.params.username,
                   answers: this.answers,
                 }).then(function (data) {

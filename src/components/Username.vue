@@ -28,7 +28,7 @@
           if (this.$route.params.userid != null){
             this.userid = this.$route.params.userid
           }
-          this.$http.get('http://localhost:4444/user/getSession').then(function(data){
+          this.$http.get('http://127.0.0.1:4444/user/getSession').then(function(data){
             this.session=data.body;
             console.log(this.session);
           });

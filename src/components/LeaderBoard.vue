@@ -25,7 +25,7 @@
         }
         },
       created(){
-        this.$http.get('http://localhost:4444/vote/'+ this.$route.params.userid).then(function (data) {
+        this.$http.get('http://127.0.0.1:4444/vote/'+ this.$route.params.userid).then(function (data) {
           console.log(data);
           this.data = data.body
         });
