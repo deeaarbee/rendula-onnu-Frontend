@@ -54,7 +54,7 @@
         console.log(this.$route.params.userid);
         if(this.$route.params.userid!=null)
         {
-          this.$http.get('http://api.the-lazy-coder.me/user/'+this.$route.params.userid).then(function(data){
+          this.$http.get('http://localhost:4444/user/'+this.$route.params.userid).then(function(data){
             this.correctans=data.body[0].answers;
             console.log(this.correctans);
           });
@@ -88,7 +88,7 @@
                 }
                 setTimeout( () =>this.green=false, 100);
                 setTimeout( () =>this.red=false, 100);
-                this.$http.post('http://api.the-lazy-coder.me/vote/addVote', {
+                this.$http.post('http://localhost:4444/vote/addVote', {
                   votername: this.$route.params.username,
                   userid: this.$route.params.userid,
                   answers: this.answers,
@@ -102,7 +102,7 @@
                 console.log("else");
                 console.log(this.$route.params.username);
                 console.log(this.answers);
-                this.$http.post('http://api.the-lazy-coder.me/user/addUser', {
+                this.$http.post('http://localhost:4444/user/addUser', {
                   username: this.$route.params.username,
                   answers: this.answers,
                 }).then(function (data) {
@@ -120,13 +120,13 @@
                 else{
                   this.red=true;
                 }
-              }   
+              }
               this.answers.push(1);
               this.update_questions();
               //console.log(this.answers);
             }
           },
-          falseclick: function () {               
+          falseclick: function () {
             this.value +=10;
             if(this.value == 110){
               this.value=100;
@@ -134,7 +134,7 @@
               //console.log(this.answers);
               if(this.$route.params.userid != null){
                 console.log("inside if");
-                console.log(this.answers); 
+                console.log(this.answers);
                 if(this.correctans[this.index]==0){
                   this.red=true;
                 }
@@ -143,7 +143,7 @@
                 }
                 setTimeout( () =>this.green=false, 100);
                 setTimeout( () =>this.red=false, 100);
-                this.$http.post('http://api.the-lazy-coder.me/vote/addVote',{
+                this.$http.post('http://localhost:4444/vote/addVote',{
                   votername: this.$route.params.username,
                   userid: this.$route.params.userid,
                   answers: this.answers,
@@ -151,11 +151,11 @@
                   console.log(data);
                   this.$router.push({name: 'leaderboard', params:{ userid: this.$route.params.userid}})
                 });
-                
+
               }
               else {
                 console.log("else");
-                this.$http.post('http://api.the-lazy-coder.me/user/addUser', {
+                this.$http.post('http://localhost:4444/user/addUser', {
                   username: this.$route.params.username,
                   answers: this.answers,
                 }).then(function (data) {
@@ -185,7 +185,7 @@
           getimage2() {
             this.img2=require('../assets/'+this.images[this.iter2]);
             return this.img2;
-          },  
+          },
           update_questions: function () {
             this.iter1 += 2;
             this.iter2 += 2;

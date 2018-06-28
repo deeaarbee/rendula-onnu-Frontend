@@ -25,7 +25,7 @@
             }
         },
         mounted(){
-            this.$http.get('http://api.the-lazy-coder.me/user/getSession').then(function(data){
+            this.$http.get('localhost:4444/user/getSession').then(function(data){
                 this.id=data.body;
                 console.log(data);
             });

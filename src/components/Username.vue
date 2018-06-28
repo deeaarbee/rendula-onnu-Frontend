@@ -7,9 +7,9 @@
             <h2 class="subtitle">Ceg Edition</h2>
             <input class="input is-large" type="text" placeholder="Enter your name" v-model="username" required>
             <button class="button is-large is-black" v-on:click="play">Play</button>
-          </div>          
-        </div>     
-      </section>      
+          </div>
+        </div>
+      </section>
     </div>
 </template>
 
@@ -28,7 +28,7 @@
           if (this.$route.params.userid != null){
             this.userid = this.$route.params.userid
           }
-          this.$http.get('http://api.the-lazy-coder.me/user/getSession').then(function(data){
+          this.$http.get('http://localhost:4444/user/getSession').then(function(data){
             this.session=data.body;
             console.log(this.session);
           });
@@ -47,9 +47,9 @@
                 this.$router.push({name:'leaderboard',params:{username: this.username, userid: this.userid }})
               }
               else{
-              this.$router.push({name:'mainpage', params:{username: this.username, userid: this.userid }});  
+              this.$router.push({name:'mainpage', params:{username: this.username, userid: this.userid }});
               }
-            }            
+            }
             else{
             this.$router.push({name:'mainpage', params:{username: this.username, userid: this.userid }});
             }
